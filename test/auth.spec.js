@@ -1,16 +1,14 @@
 import request from 'supertest';
 import { expect } from 'chai';
 import 'dotenv/config';
+import {login} from '../helpers/generalHelper'
 
 describe('AUTHORIZATION AND AUTHENTICATION', () => {
   describe('POSITIVE TESTS', () => {
     let res
 
     before(async() => {
-       res = await request(process.env.BASE_URL).post('/user/login').send({
-        email: process.env.EMAIL,
-        password: process.env.PASSWORD,
-      });
+       res = await login(process.env.EMAIL, process.env.PASSWORD)
     });
     
     it('login with valid credentials, verify status code', () => {
