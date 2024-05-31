@@ -1,32 +1,43 @@
 import request from 'supertest';
-import { faker } from '@faker-js/faker';
+import {
+  signUp,
+  signUpWithExstEmail,
+  signUpWithEmptyEmail,
+  signUpwithEmptyPassword,
+} from '../helpers/generalHelper';
 import { expect } from 'chai';
 
 describe('SIGN UP', () => {
   describe('POSITIVE TESTS', () => {
     it('sign up with valid credentials', async () => {
-      const res = await request('https://clientbase-server.herokuapp.com/v6')
-        .post('/user')
-        .send({
-          companyName: 'Company',
-          email: faker.internet.email().toLowerCase(),
-          firstName: faker.person.firstName(),
-          lastName: faker.person.lastName(),
-          password: 'Password1',
-        });
-        console.log(res.body);
+      const res = await signUp();
+
+      expect(res.statusCode).to.eq(201);
+      expect(res.body.message).to.eq(
+        'User created successfully. Please check your email and verify it'
+      );
     });
   });
 
-  describe('NEGATIVE TESTS', () => {});
-});
+  describe('NEGATIVE TESTS', () => {
+    it('sign up with existing email', () => {
+      signUpWithExstEmail().then(res => {
+        expect(res.statusCode).to.eq(409);
+        expect(res.body.message).to.eq('User with this e-mail exists');
+      });
+    });
 
-//email: faker.internet.email().toLowerCase(),
-// firstName: faker.name.firstName(),
-// lastName: faker.name.lastName(),
-// company: faker.company.companyName(),
-// addressLine1: faker.address.streetAddress(),
-// addressLine2: faker.address.secondaryAddress(),
-// zipCode: faker.address.zipCode(),
-// street: faker.address.streetAddress(),
-// city: faker.address.city()
+    it('sign up with empty email fields', async () => {
+      const res = await signUpWithEmptyEmail();
+
+      expect(res.statusCode).to.eq(404);
+      expect(res.body.message).to.eq('User was not created');
+    });
+
+    it('sign up with empty password field', async () => {
+      const res = await signUpwithEmptyPassword();
+      expect(res.statusCode).to.eq(400);
+      expect(res.body.message).to.eq('Wrong password format');
+    });
+  });
+});
