@@ -6,7 +6,6 @@ before(async () => {
         email: process.env.EMAIL,
         password: process.env.PASSWORD,
       });
-      console.log(response.body);
 
        process.env.TOKEN = response.body.payload.token
        
