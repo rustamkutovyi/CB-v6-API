@@ -17,7 +17,7 @@ describe('VERIFY EMAIL IN SIGN UP', () => {
     });
 });
 
-describe.only('VERIFY EMAIL', () => {
+describe('VERIFY EMAIL', () => {
     let res, str, endPoint
     const newEmail = 'user' + Date.now() + '@gmail.com'
     it('verify email', async () => {
