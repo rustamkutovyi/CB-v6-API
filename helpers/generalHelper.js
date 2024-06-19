@@ -20,6 +20,17 @@ export function signUp() {
   });
 }
 
+export function signUpParam(email, firstName, lastName, password) {
+  return request(process.env.BASE_URL)
+  .post('/user')
+  .send({
+    email: email,
+    firstName: firstName,
+    lastName: lastName,
+    password: password,
+  });
+}
+
 export function signUpWithExstEmail() {
   return request(process.env.BASE_URL)
   .post('/user')
@@ -54,4 +65,10 @@ export function signUpwithEmptyPassword() {
     lastName: faker.person.lastName(),
     password: '',
   });
+}
+
+export function emailSearch(email) {
+  return request('https://clientbase-server.herokuapp.com')
+  .post('/email/search')
+  .send({email: email})
 }
