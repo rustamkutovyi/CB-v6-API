@@ -68,7 +68,7 @@ export function signUpwithEmptyPassword() {
 }
 
 export function emailSearch(email) {
-  return request('https://clientbase-server.herokuapp.com')
+  return request('https://clientbase-server-edu-dae6cac55393.herokuapp.com')
   .post('/email/search')
   .send({email: email})
 }

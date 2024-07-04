@@ -13,7 +13,6 @@ describe('VERIFY EMAIL IN SIGN UP', () => {
 
        res = await generalHelper.login(newEmail, process.env.PASSWORD)
 
-       console.log(res.body);
     });
 });
 
@@ -24,19 +23,17 @@ describe('VERIFY EMAIL', () => {
          await generalHelper.signUpParam(newEmail, faker.person.firstName(), faker.person.lastName(), process.env.PASSWORD)
 
          const resp = await generalHelper.login(newEmail, process.env.PASSWORD)
-         console.log(resp.body.payload.user.roles);
 
          str = await generalHelper.emailSearch(newEmail)
+        
+         endPoint = str.body.payload.items[0].message.split('\n')[4].split('https://clientbase.pasv.us')[1]
 
-         endPoint = str.body.payload.items[0].message.split('\n')[4].split('https://clientbase.us/v6')[1]
-
-         await request(process.env.BASE_URL)
+         await request('https://clientbase-server-edu-dae6cac55393.herokuapp.com')
          .get(endPoint)
          .send()
 
          res = await generalHelper.login(newEmail, process.env.PASSWORD)
 
-         console.log(res.body.payload.user.roles);
          expect(res.body.payload.user.roles).to.include('verified')
 
     })
