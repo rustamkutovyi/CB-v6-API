@@ -1,6 +1,7 @@
 import request from 'supertest'
 const chance = require('chance').Chance();
 import { expect } from 'chai'
+
 import { clientCreate, clientDelete, clientGetAll } from '../../helpers/clientHelper';
 
 describe('CLIENT CREATE', () => {
@@ -45,6 +46,7 @@ describe('CLIENT CREATE', () => {
         it('create a client with only required data', async () => {
             res = await clientCreate(chance.name(), chance.phone())
             clientsList.push(res.body.payload)
+
             expect(res.statusCode).to.eq(200)
             expect(res.body.message).to.eq('Client created')
          })
