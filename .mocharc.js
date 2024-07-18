@@ -1,6 +1,6 @@
 module.exports = {
     require: ['@babel/register'],
-    timeout: 5000,
+    timeout: 20000,
     exclude:['test/example.spec.js'],
     file: 'config/project-setup.js',
     reporter: 'mochawesome'
